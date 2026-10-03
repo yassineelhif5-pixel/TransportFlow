@@ -1,0 +1,52 @@
+# TransportFlow — environnement local complet : SQL Server + API + Web + stockage documentaire.
+# Usage : copier .env.example en .env, puis `docker compose up --build`, ouvrir http://localhost:3000
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: transportflow-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${SQL_SA_PASSWORD:?Définissez SQL_SA_PASSWORD dans .env}
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  api:
+    build: ./backend
+    container_name: transportflow-api
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${API_ENVIRONMENT:-Development}
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=TransportFlow;User Id=sa;Password=${SQL_SA_PASSWORD};TrustServerCertificate=True;Encrypt=False"
+      Jwt__Secret: ${JWT_SECRET:?Définissez JWT_SECRET (32 caractères minimum) dans .env}
+      SEED_ADMIN_USERNAME: ${SEED_ADMIN_USERNAME:-admin}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+      Cors__AllowedOrigins__0: http://localhost:3000
+      Swagger__Enabled: "true"
+      Storage__RootPath: /data/documents
+    ports:
+      - "5000:8080"
+    volumes:
+      - documents:/data/documents
+
+  web:
+    build: ./frontend
+    container_name: transportflow-web
+    depends_on:
+      - api
+    ports:
+      - "3000:80"
+
+volumes:
+  sqldata:
+  documents:

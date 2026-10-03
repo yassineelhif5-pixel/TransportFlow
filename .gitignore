@@ -1,0 +1,26 @@
+# Secrets et configuration locale
+.env
+*.env.local
+**/appsettings.*.local.json
+**/secrets.json
+
+# .NET
+**/bin/
+**/obj/
+**/TestResults/
+*.user
+.vs/
+
+# Stockage documentaire local (jamais versionné)
+**/storage/
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

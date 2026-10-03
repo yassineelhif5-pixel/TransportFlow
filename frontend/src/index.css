@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Jetons de thème. Sombre par défaut (« salle d'exploitation »),
+   clair disponible via le sélecteur de l'en-tête.
+   ------------------------------------------------------------------ */
+:root,
+[data-theme='light'] {
+  --bg: 244 247 250;        /* #F4F7FA */
+  --surface: 255 255 255;
+  --raised: 238 243 248;
+  --line: 222 229 238;
+  --ink: 20 35 55;          /* #142337 */
+  --muted: 88 106 129;
+  --subtle: 140 155 175;
+  --shadow: 20 35 55;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: 11 21 36;           /* #0B1524 */
+  --surface: 16 30 48;
+  --raised: 24 41 64;
+  --line: 34 55 82;
+  --ink: 233 239 246;
+  --muted: 146 166 191;
+  --subtle: 101 122 149;
+  --shadow: 0 0 0;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    font-family: 'Archivo Variable', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-bg text-ink;
+    font-feature-settings: 'tnum' 1, 'ss01' 1;
+  }
+  h1, h2, h3 {
+    font-stretch: 112%;
+    letter-spacing: -0.012em;
+  }
+  ::selection { background: rgb(44 170 191 / 0.3); }
+  :focus-visible {
+    outline: 2px solid #2CAABF;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  [data-theme='dark'] input[type='date']::-webkit-calendar-picker-indicator,
+  [data-theme='dark'] input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    filter: invert(0.85);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line/80 bg-surface shadow-card;
+  }
+  .field-label {
+    @apply mb-1.5 block text-[0.8125rem] font-medium text-muted;
+  }
+  .field-input {
+    @apply h-10 w-full rounded-lg border border-line bg-surface px-3 text-sm text-ink placeholder:text-subtle
+      transition-[border-color,box-shadow] duration-150
+      hover:border-subtle/60 focus:border-cyan focus:outline-none focus:ring-4 focus:ring-cyan/15
+      disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .field-input[aria-invalid='true'] {
+    @apply border-stop focus:border-stop focus:ring-stop/15;
+  }
+  .th-cell {
+    @apply whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-muted;
+  }
+  .td-cell {
+    @apply whitespace-nowrap px-4 py-3 text-sm;
+  }
+  .ref-code {
+    font-stretch: 92%;
+    @apply font-semibold tracking-tight;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line)) transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
