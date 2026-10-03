@@ -15,7 +15,7 @@ export function BrandMark({ className }: { className?: string }) {
 
 export function BrandName({ className }: { className?: string }) {
   return (
-    <span className={clsx('font-semibold tracking-tight text-white', className)} style={{ fontStretch: '118%' }}>
+    <span className={clsx('font-semibold tracking-tight text-ink', className)} style={{ fontStretch: '118%' }}>
       Transport<span className="text-cyan">Flow</span>
     </span>
   );

@@ -177,7 +177,7 @@ export default function DashboardPage() {
             </Card>
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-12">
+          <div className="grid items-start gap-6 xl:grid-cols-12">
             <Card className="xl:col-span-8">
               <CardHeader
                 title="Missions nécessitant une action"

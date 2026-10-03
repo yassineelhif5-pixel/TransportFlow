@@ -55,7 +55,7 @@ function Sidebar({ collapsed, onToggle, mobileOpen, onCloseMobile }: { collapsed
       {mobileOpen && <div className="fixed inset-0 z-30 bg-navy-950/60 backdrop-blur-[1px] lg:hidden" onClick={onCloseMobile} aria-hidden />}
       <aside
         className={clsx(
-          'fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.06] bg-navy text-white transition-[width,transform] duration-200',
+          'fixed inset-y-0 left-0 z-40 flex flex-col border-r border-line bg-surface text-ink transition-[width,transform] duration-200',
           collapsed ? 'lg:w-[76px]' : 'lg:w-[256px]',
           'w-[272px]',
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
@@ -71,7 +71,7 @@ function Sidebar({ collapsed, onToggle, mobileOpen, onCloseMobile }: { collapsed
           {NAV.map((group, gi) => (
             <div key={gi} className={clsx(gi > 0 && 'mt-5')}>
               {group.title && (
-                <p className={clsx('mb-1.5 px-3 text-xs text-white/40', collapsed && 'lg:sr-only')}>{group.title}</p>
+                <p className={clsx('mb-1.5 px-3 text-xs text-subtle', collapsed && 'lg:sr-only')}>{group.title}</p>
               )}
               <ul className="space-y-0.5">
                 {group.items.map((item) => (
@@ -85,14 +85,14 @@ function Sidebar({ collapsed, onToggle, mobileOpen, onCloseMobile }: { collapsed
                         clsx(
                           'group relative flex h-10 items-center gap-3 rounded-lg px-3 text-sm transition-colors',
                           collapsed && 'lg:justify-center lg:px-0',
-                          isActive ? 'bg-white/[0.08] font-medium text-white' : 'text-white/65 hover:bg-white/[0.04] hover:text-white',
+                          isActive ? 'bg-brand/10 font-medium text-brand-600 dark:bg-white/[0.07] dark:text-ink' : 'text-muted hover:bg-raised hover:text-ink',
                         )
                       }
                     >
                       {({ isActive }) => (
                         <>
-                          {isActive && <span className="absolute left-0 top-2 h-6 w-[3px] rounded-r bg-cyan shadow-[0_0_12px_rgba(44,170,191,.9)]" aria-hidden />}
-                          <item.icon className={clsx('h-[18px] w-[18px] shrink-0', isActive ? 'text-cyan' : 'text-white/55 group-hover:text-white/80')} />
+                          {isActive && <span className="absolute left-0 top-2 h-6 w-[3px] rounded-r bg-brand dark:bg-cyan dark:shadow-[0_0_12px_rgba(44,170,191,.9)]" aria-hidden />}
+                          <item.icon className={clsx('h-[18px] w-[18px] shrink-0', isActive ? 'text-brand dark:text-cyan' : 'text-subtle group-hover:text-muted')} />
                           <span className={clsx(collapsed && 'lg:sr-only')}>{item.label}</span>
                         </>
                       )}
@@ -104,23 +104,23 @@ function Sidebar({ collapsed, onToggle, mobileOpen, onCloseMobile }: { collapsed
           ))}
         </nav>
 
-        <div className="border-t border-white/[0.06] p-3">
+        <div className="border-t border-line p-3">
           <div className={clsx('flex items-center gap-3 rounded-xl p-2', collapsed && 'lg:flex-col lg:gap-2')}>
-            <NavLink to="/profile" onClick={onCloseMobile} className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-cyan text-xs font-semibold" title="Mon profil">
+            <NavLink to="/profile" onClick={onCloseMobile} className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-cyan text-xs font-semibold text-white" title="Mon profil">
               {initials(user?.fullName)}
             </NavLink>
             <NavLink to="/profile" onClick={onCloseMobile} className={clsx('min-w-0 flex-1', collapsed && 'lg:hidden')}>
               <p className="truncate text-sm font-medium">{user?.firstName ?? 'Admin'}</p>
-              <p className="truncate text-xs text-white/50">Administrateur</p>
+              <p className="truncate text-xs text-muted">Administrateur</p>
             </NavLink>
-            <button type="button" onClick={() => logout()} className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-white/55 hover:bg-white/[0.06] hover:text-white" aria-label="Déconnexion" title="Déconnexion">
+            <button type="button" onClick={() => logout()} className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-subtle hover:bg-raised hover:text-ink" aria-label="Déconnexion" title="Déconnexion">
               <LogOut className="h-4 w-4" />
             </button>
           </div>
           <button
             type="button"
             onClick={onToggle}
-            className="mt-1 hidden h-8 w-full items-center justify-center gap-2 rounded-lg text-xs text-white/45 hover:bg-white/[0.04] hover:text-white/80 lg:flex"
+            className="mt-1 hidden h-8 w-full items-center justify-center gap-2 rounded-lg text-xs text-subtle hover:bg-raised hover:text-ink lg:flex"
             aria-label={collapsed ? 'Déplier le menu' : 'Replier le menu'}
           >
             {collapsed ? <ChevronsRight className="h-4 w-4" /> : <><ChevronsLeft className="h-4 w-4" /> Replier</>}

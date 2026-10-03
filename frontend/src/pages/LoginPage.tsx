@@ -7,6 +7,7 @@ import { BrandMark, BrandName } from '@/components/BrandMark';
 import { RouteNetwork } from '@/components/RouteNetwork';
 import { Button, Checkbox, Input } from '@/components/ui/Controls';
 import { Modal } from '@/components/ui/Display';
+import { IS_DEMO } from '@/demo/flags';
 
 export default function LoginPage() {
   const { login, status, endReason } = useAuth();
@@ -14,8 +15,9 @@ export default function LoginPage() {
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from ?? '/dashboard';
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // Démo publiée : identifiants préremplis pour un accès en un clic.
+  const [username, setUsername] = useState(IS_DEMO ? 'admin' : '');
+  const [password, setPassword] = useState(IS_DEMO ? 'admin' : '');
   const [remember, setRemember] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
   const [pending, setPending] = useState(false);
@@ -52,8 +54,8 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-screen bg-bg lg:grid-cols-[1.08fr_1fr]">
       {/* Partie gauche : illustration et promesse */}
-      <aside className="relative hidden overflow-hidden bg-navy-950 text-white lg:flex lg:flex-col">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_0%_0%,rgba(35,110,190,.22),transparent_55%),radial-gradient(90%_70%_at_100%_100%,rgba(44,170,191,.16),transparent_60%)]" aria-hidden />
+      <aside className="relative hidden overflow-hidden border-r border-line bg-gradient-to-br from-[#E8F1FA] via-[#F1F6FB] to-[#E6F5F7] text-navy lg:flex lg:flex-col dark:from-navy-950 dark:via-navy-950 dark:to-navy-900 dark:text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_0%_0%,rgba(35,110,190,.12),transparent_55%),radial-gradient(90%_70%_at_100%_100%,rgba(44,170,191,.12),transparent_60%)]" aria-hidden />
         <div className="relative z-10 flex items-center gap-3 px-12 pt-10">
           <BrandMark className="h-10 w-10" />
           <BrandName className="text-xl" />
@@ -67,9 +69,9 @@ export default function LoginPage() {
           <p className="max-w-md text-[1.75rem] font-semibold leading-tight" style={{ fontStretch: '115%' }}>
             L'administrateur pilote.<br />
             Le chauffeur exécute.<br />
-            <span className="text-white/55">La plateforme trace.</span>
+            <span className="text-brand dark:text-white/55">La plateforme trace.</span>
           </p>
-          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/55">
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
             <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-brand" /> Missions et affectations</span>
             <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-cyan" /> Suivi des statuts en temps réel</span>
             <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-go" /> Documents et audit</span>
@@ -135,10 +137,10 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {import.meta.env.DEV && (
+          {(import.meta.env.DEV || IS_DEMO) && (
             <div className="mt-6 flex items-center gap-3 rounded-xl border border-dashed border-warn/40 bg-warn/5 px-4 py-3 text-[0.8125rem] text-muted">
               <KeyRound className="h-4 w-4 shrink-0 text-warn" />
-              <span>Environnement de développement : <strong className="text-ink">admin</strong> / <strong className="text-ink">admin</strong></span>
+              <span>{IS_DEMO ? 'Accès démonstration' : 'Environnement de développement'} : <strong className="text-ink">admin</strong> / <strong className="text-ink">admin</strong></span>
             </div>
           )}
 

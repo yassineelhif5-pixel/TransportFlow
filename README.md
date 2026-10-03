@@ -22,6 +22,21 @@ historique, audit et notifications. Elle sert aussi de backend à la future **ap
 
 ---
 
+## Version de démonstration en ligne (gratuite)
+
+Une version **autonome** du site est publiée automatiquement sur GitHub Pages à chaque envoi sur `main` :
+**https://yassineelhif5-pixel.github.io/TransportFlow/** (identifiants préremplis : `admin` / `admin`).
+
+- Elle présente le design et toutes les fonctionnalités (missions, affectation, statuts, documents, import, historique…).
+- L'API y est **simulée dans le navigateur** avec des données fictives (`frontend/src/demo/`) : aucun serveur,
+  aucune base de données. Les modifications restent dans le navigateur du visiteur (bouton « Réinitialiser »).
+- Activation (une seule fois) : **Settings › Pages › Source : GitHub Actions**. Workflow : `.github/workflows/deploy-demo.yml`.
+- Build local : `cd frontend && npm run build:demo && npm run preview:demo` → http://localhost:3000/TransportFlow/
+
+La vraie application (API ASP.NET Core + SQL Server) fonctionne comme décrit ci-dessous.
+
+---
+
 ## 1. Prérequis
 
 | Outil | Version |

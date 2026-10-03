@@ -45,15 +45,15 @@ export function RouteNetwork() {
     <svg viewBox="0 0 580 560" className="h-full w-full" role="img" aria-label="Réseau de transport : un camion relie Paris à Lyon">
       <defs>
         <radialGradient id="rn-glow" cx="50%" cy="45%" r="60%">
-          <stop offset="0%" stopColor="#236EBE" stopOpacity="0.28" />
-          <stop offset="100%" stopColor="#142337" stopOpacity="0" />
+          <stop offset="0%" stopColor="#236EBE" stopOpacity="0.16" />
+          <stop offset="100%" stopColor="#236EBE" stopOpacity="0" />
         </radialGradient>
         <linearGradient id="rn-active" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#236EBE" />
           <stop offset="100%" stopColor="#2CAABF" />
         </linearGradient>
         <pattern id="rn-grid" width="28" height="28" patternUnits="userSpaceOnUse">
-          <path d="M28 0H0V28" fill="none" stroke="#ffffff" strokeOpacity="0.045" />
+          <path d="M28 0H0V28" fill="none" style={{ stroke: 'rgb(var(--ink))' }} strokeOpacity="0.06" />
         </pattern>
         <filter id="rn-blur"><feGaussianBlur stdDeviation="6" /></filter>
         <radialGradient id="rn-fade" cx="50%" cy="50%" r="50%">
@@ -64,16 +64,16 @@ export function RouteNetwork() {
       </defs>
 
       <rect width="580" height="560" fill="url(#rn-grid)" mask="url(#rn-mask)" />
-      <ellipse cx="300" cy="280" rx="300" ry="260" fill="url(#rn-glow)" />
+      <ellipse cx="300" cy="280" rx="280" ry="250" fill="url(#rn-glow)" />
 
       {/* Silhouette stylisée de l'Hexagone */}
       <path
         d="M300 40 L360 70 L470 120 L500 175 L470 240 L455 300 L470 360 L455 420 L470 470 L410 515 L330 500 L260 520 L190 500 L140 460 L150 400 L115 330 L80 280 L60 240 L95 210 L150 200 L190 150 L230 115 L270 60 Z"
-        fill="#ffffff" fillOpacity="0.025" stroke="#2CAABF" strokeOpacity="0.18" strokeWidth="1.2" strokeLinejoin="round"
+        style={{ fill: 'rgb(var(--ink))' }} fillOpacity="0.03" stroke="#236EBE" strokeOpacity="0.25" strokeWidth="1.2" strokeLinejoin="round"
       />
 
       {ROUTES.map(([a, b]) => (
-        <path key={`${a}-${b}`} d={curve(a, b)} fill="none" stroke="#8FA3BA" strokeOpacity="0.28" strokeWidth="1.4" strokeDasharray="2 6" strokeLinecap="round" />
+        <path key={`${a}-${b}`} d={curve(a, b)} fill="none" stroke="#7D8FA6" strokeOpacity="0.45" strokeWidth="1.4" strokeDasharray="2 6" strokeLinecap="round" />
       ))}
 
       {/* Liaison active */}
@@ -87,8 +87,8 @@ export function RouteNetwork() {
         return (
           <g key={k}>
             {hot && <circle cx={c.x} cy={c.y} r="14" fill={k === 'paris' ? '#236EBE' : '#2A9B64'} fillOpacity="0.18" />}
-            <circle cx={c.x} cy={c.y} r={hot ? 6 : 3.5} fill={k === 'paris' ? '#236EBE' : k === 'lyon' ? '#2A9B64' : '#8FA3BA'} stroke="#0B1524" strokeWidth="2" />
-            <text x={c.x + 12} y={c.y + 4} fontSize="12" fill="#ffffff" fillOpacity={hot ? 0.9 : 0.42} fontFamily="'Archivo Variable', sans-serif" fontWeight={hot ? 600 : 400}>
+            <circle cx={c.x} cy={c.y} r={hot ? 6 : 3.5} fill={k === 'paris' ? '#236EBE' : k === 'lyon' ? '#2A9B64' : '#8FA3BA'} style={{ stroke: 'rgb(var(--surface))' }} strokeWidth="2" />
+            <text x={c.x + 12} y={c.y + 4} fontSize="12" style={{ fill: 'rgb(var(--ink))' }} fillOpacity={hot ? 0.9 : 0.5} fontFamily="'Archivo Variable', sans-serif" fontWeight={hot ? 600 : 400}>
               {c.label}
             </text>
           </g>
@@ -98,12 +98,12 @@ export function RouteNetwork() {
       {/* Camion en déplacement */}
       <g>
         <g transform={animate ? undefined : 'translate(345 245)'}>
-          <circle r="15" fill="#0B1524" stroke="#2CAABF" strokeWidth="1.5" />
+          <circle r="15" style={{ fill: 'rgb(var(--surface))' }} stroke="#2CAABF" strokeWidth="1.5" />
           <g transform="translate(-8 -6)" fill="none" stroke="#2CAABF" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
             <path d="M1 2h9v8H1z" />
             <path d="M10 5h3.2l2.3 2.6V10H10" />
-            <circle cx="4" cy="11" r="1.6" fill="#0B1524" />
-            <circle cx="12.5" cy="11" r="1.6" fill="#0B1524" />
+            <circle cx="4" cy="11" r="1.6" style={{ fill: 'rgb(var(--surface))' }} />
+            <circle cx="12.5" cy="11" r="1.6" style={{ fill: 'rgb(var(--surface))' }} />
           </g>
           {animate && <animateMotion dur="7s" repeatCount="indefinite" path={active} keyPoints="0;1" keyTimes="0;1" calcMode="linear" />}
         </g>

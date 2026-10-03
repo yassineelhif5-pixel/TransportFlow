@@ -220,7 +220,7 @@ export function NotificationBell() {
 // ------------------------------------------------------------------ Thème
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => (document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark'));
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => (document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'));
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0F1C2D' : '#F4F7FA');

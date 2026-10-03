@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------
-   Jetons de thème. Sombre par défaut (« salle d'exploitation »),
-   clair disponible via le sélecteur de l'en-tête.
+   Jetons de thème. Clair par défaut, sombre disponible
+   via le sélecteur de l'en-tête (mémorisé).
    ------------------------------------------------------------------ */
 :root,
 [data-theme='light'] {
   --bg: 244 247 250;        /* #F4F7FA */
   --surface: 255 255 255;
-  --raised: 238 243 248;
-  --line: 222 229 238;
+  --raised: 239 244 249;
+  --line: 224 231 239;
   --ink: 20 35 55;          /* #142337 */
   --muted: 88 106 129;
   --subtle: 140 155 175;
@@ -93,6 +93,13 @@
     scrollbar-color: rgb(var(--line)) transparent;
   }
 }
+
+/* Sur fond clair, les teintes vives de la palette sont assombries pour rester lisibles (contraste AA). */
+[data-theme='light'] :is(.text-cyan, .hover\:text-cyan:hover) { color: #1B8799; }
+[data-theme='light'] .text-cyan-400 { color: #17808F; }
+[data-theme='light'] .text-go-400 { color: #23845A; }
+[data-theme='light'] .text-brand-400 { color: #1D5FA6; }
+[data-theme='light'] .text-warn { color: #A86F12; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
